@@ -64,7 +64,7 @@ try {
 
     inData.forEach(function (fileName) {
       // per file actions here, include only TEST files:
-      if (fileName.includes("TEST")) {
+      if (fileName.includes("test")) {
         //grab file and populate content to JS object:
         var convert = require("xml-js");
         //TEST ONLY:
@@ -75,6 +75,7 @@ try {
         var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
         //process and output attributes:
         //if (short output stirng for passed test) else (long output string for failed test):
+        console.log("content: ", content);
         console.log("calculating test results, deciding if abbreviate output");
         if (
           parseInt(content.elements[0].attributes.skipped) == 0 &&
