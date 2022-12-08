@@ -1,5 +1,5 @@
 const core = require("@actions/core");
-const github = require("@actions/github");
+const util = require("util");
 
 try {
   const nameToGreet = core.getInput("who-to-greet");
@@ -76,6 +76,9 @@ try {
         //process and output attributes:
         //if (short output stirng for passed test) else (long output string for failed test):
         console.log("content: ", content);
+        console.log(
+          util.inspect(content, false, null, true /* enable colors */)
+        );
         console.log("content attributes: ", content.elements[0].attributes);
         console.log("content elements FAIL: ", content.elements[0].elements);
 
