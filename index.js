@@ -76,6 +76,9 @@ try {
         //process and output attributes:
         //if (short output stirng for passed test) else (long output string for failed test):
         console.log("content: ", content);
+        console.log("content attributes: ", content.elements[0].attributes);
+        console.log("content elements FAIL: ", content.elements[0].elements);
+
         console.log("calculating test results, deciding if abbreviate output");
         if (
           parseInt(content.elements[0].attributes.skipped) == 0 &&
