@@ -1,0 +1,24 @@
+{
+  "name": "slack-test-report",
+  "version": "1.0.0",
+  "description": "slack test reporter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jyotishka7139/slack-test-report.git"
+  },
+  "author": "jd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jyotishka7139/slack-test-report/issues"
+  },
+  "homepage": "https://github.com/jyotishka7139/slack-test-report#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "xml-js": "^1.6.11"
+  }
+}

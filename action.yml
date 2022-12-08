@@ -1,0 +1,26 @@
+name: "slack-test-report"
+description: "Detailed Jest Test Report sent to a Slack channel"
+branding:
+  icon: "slack"
+  color: "green"
+inputs:
+  who-to-greet: # id of input
+    description: "Who to greet"
+    required: false
+  testOutputPath:
+    description: "Test Output Path"
+    required: true
+    default: "missing test XML path from yml configuration"
+  # slackChannelId:
+  #   description: 'Slack Conversation ID ie: C12355667'
+  #   required: true
+  #   default: 'missing slack channel ID from yml configuration'
+  # slackToken:
+  #   description: 'Secret Slack Token'
+  #   required: true
+  #   default: 'missing slack token from yml configuration'
+#outputs:
+#none
+runs:
+  using: "node16"
+  main: "index.js"
