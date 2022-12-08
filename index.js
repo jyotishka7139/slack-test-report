@@ -38,10 +38,15 @@ try {
 
     let FINALSTR = "Hello " + nameToGreet + "!" + "\r\n";
 
-    let promise = new Promise(function (resolve, reject) {
-      FINALSTR += parseData(data);
-      resolve(FINALSTR);
-    });
+    //remove this later
+    FINALSTR += parseData(data);
+    console.log(`final j string is ${FINALSTR}`);
+    //remove
+
+    // let promise = new Promise(function (resolve, reject) {
+    //   FINALSTR += parseData(data);
+    //   resolve(FINALSTR);
+    // });
 
     // promise.then(
     //   function (result) {

@@ -1,6 +1,6 @@
 {
   "name": "slack-test-report",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "slack test reporter",
   "main": "index.js",
   "scripts": {
