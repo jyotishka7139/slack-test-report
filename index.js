@@ -90,9 +90,9 @@ try {
           content.elements[0].attributes.name +
           " ALL TESTS PASSED*" +
           "\r\n" +
-          `_${content.elements[0].attributes.tests} tests were completed in ${content.elements[0].attributes.time}s with ${content.elements[0].attributes.tests} passed and ${content.elements[0].failures} failed_`;
-        //144 tests were completed in 21s with 144 passed, 0 failed and 0 skipped.
-        "________________________________________________________________________________" +
+          `_${content.elements[0].attributes.tests} tests were completed in ${content.elements[0].attributes.time}s with ${content.elements[0].attributes.tests} passed and ${content.elements[0].attributes.failures} failed_` +
+          "\r\n" +
+          "________________________________________________________________________________" +
           "\r\n\r\n\r\n";
         reportContent += "\r\n" + "_*COMPONENTS TEST CASES*_" + "\r\n\r\n";
         reportContent += "*TEST SUITE   |   PASSED   |   TIME*" + "\r\n";
