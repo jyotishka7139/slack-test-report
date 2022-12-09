@@ -55,6 +55,13 @@ try {
     );
   });
 
+  const sortComponentsAndViews = (testcases) => {
+    const sortedTestcases = testcases.sort((a, b) => {
+      return a.attributes.name.localeCompare(b.attributes.name);
+    });
+    return sortedTestcases;
+  };
+
   //function for parse every XML:
   function parseData(inData) {
     let testReport = "";
@@ -66,7 +73,7 @@ try {
       var xml = require("fs").readFileSync(testDir + "/" + fileName, "utf8");
       var options = { ignoreComment: true, alwaysChildren: true };
       var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
-      const testcases = content.elements[0].elements;
+      const testcases = sortComponentsAndViews(content.elements[0].elements);
 
       console.log(util.inspect(content, false, null, true /* enable colors */));
       console.log("calculating test results, deciding if abbreviate output");
@@ -79,21 +86,47 @@ try {
         );
         let reportContent =
           ":white_check_mark: " +
+          "**" +
           content.elements[0].attributes.name +
-          " ALL TESTS PASSED";
-        reportContent += "\r\n\r\n";
+          " ALL TESTS PASSED**";
+        reportContent += "\r\n\r\n\r\n" + "COMPONENTS TEST CASES" + "\r\n\r\n";
+        let reachedViewsTestcases = false;
         testcases.forEach((testSuite) => {
+          if (
+            testSuite.attributes.name.split("/")[2] == "views" &&
+            !reachedViewsTestcases
+          ) {
+            reportContent += "\r\n\r\n" + "VIEWS TEST CASES" + "\r\n\r\n";
+
+            reachedViewsTestcases = true;
+          }
           reportContent +=
-            ":white_check_mark: " + testSuite.attributes.name + "\r\n\r\n";
-          let testDescription = null;
-          testSuite.elements.forEach((test) => {
-            if (testDescription != test.attributes.classname) {
-              testDescription = test.attributes.classname;
-              reportContent += test.attributes.classname + "\r\n";
-            }
-            reportContent +=
-              " :white_check_mark: " + test.attributes.name + "\r\n";
-          });
+            "> " + ":green_circle: " + testSuite.attributes.name + "\r\n\r\n";
+          let testSuiteMessage;
+          const testSuitePathElements =
+            testSuite.attributes.name.split("/").length;
+          const testSuiteElement = testSuite.attributes.name
+            .split("/")
+            [testSuitePathElements - 1].split(".")[0];
+          testSuiteMessage =
+            testSuiteElement +
+            " and it’s child elements, states and click actions have passed all tests!";
+
+          reportContent += "> " + "*" + testSuiteMessage + "*" + "\r\n\r\n";
+
+          // ------ contained tests of above test suite -------
+
+          // let testDescription = null;
+          // testSuite.elements.forEach((test) => {
+          //   if (testDescription != test.attributes.classname) {
+          //     testDescription = test.attributes.classname;
+          //     reportContent += test.attributes.classname + "\r\n";
+          //   }
+          //   reportContent += " :white_check_mark: " + test.attributes.name + "\r\n";
+          // });
+          // reportContent += "\r\n\r\n";
+
+          // ---------------------------------------------------
         });
         testReport += reportContent + "\r\n";
       } else {
@@ -115,7 +148,9 @@ try {
         testcases.forEach((testSuite) => {
           reportContent +=
             `${
-              testSuite.attributes.failures ? ":x: " : ":white_check_mark: "
+              testSuite.attributes.failures != 0
+                ? ":x: "
+                : ":white_check_mark: "
             }` +
             testSuite.attributes.name +
             "\r\n\r\n";
@@ -143,6 +178,7 @@ try {
               reportContent += "\r\n\r\n" + "-------------------" + "\r\n\r\n";
             }
           });
+          testReport += reportContent + "\r\n\r\n";
         });
         testReport += reportContent + "\r\n";
       }
