@@ -58,6 +58,7 @@ try {
   //function for parse every XML:
   function parseData(inData) {
     let testReport = "";
+    const testcases = content.elements[0].elements;
     inData.forEach(function (fileName) {
       // per file actions here, include only TEST files:
       // if (fileName.includes("test")) {
@@ -68,10 +69,7 @@ try {
       var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
       //process and output attributes:
       //if (short output stirng for passed test) else (long output string for failed test):
-      console.log("content: ", content);
       console.log(util.inspect(content, false, null, true /* enable colors */));
-      console.log("content attributes: ", content.elements[0].attributes);
-      console.log("content elements FAIL: ", content.elements[0].elements);
 
       console.log("calculating test results, deciding if abbreviate output");
       if (
@@ -79,13 +77,14 @@ try {
         parseInt(content.elements[0].attributes.errors) == 0
       ) {
         console.log(
-          "building abbreviated string for " +
-            content.elements[0].attributes.name
+          "building ALL PASS report for " + content.elements[0].attributes.name
         );
         let reportContent =
-          "" + content.elements[0].attributes.name + " ALL TESTS PASSED:";
+          ":white_check_mark: " +
+          content.elements[0].attributes.name +
+          " ALL TESTS PASSED";
         reportContent += "\r\n\r\n";
-        content.elements[0].elements.forEach((testSuite) => {
+        testcases.forEach((testSuite) => {
           reportContent +=
             ":white_check_mark: " + testSuite.attributes.name + "\r\n\r\n";
           let testDescription = null;
@@ -98,40 +97,67 @@ try {
               " :white_check_mark: " + test.attributes.name + "\r\n";
           });
         });
-        reportContent += "\r\n";
-        testReport += reportContent;
+        testReport += reportContent + "\r\n";
       } else {
         console.log(
-          "building long string for failed test: " +
+          "building FAIL report for failed test: " +
             content.elements[0].attributes.name
         );
-        let OUTPUTSTR = "";
-        OUTPUTSTR += content.elements[0].attributes.name;
-        OUTPUTSTR += " HAS ERRORS:";
-        OUTPUTSTR += "\r\n";
+        let reportContent =
+          ":x: " +
+          content.elements[0].attributes.name +
+          ": " +
+          content.elements[0].attributes.failures +
+          ` ${
+            content.elements[0].attributes.failures == 1 ? "TEST" : "TESTS"
+          } FAILED`;
+        reportContent += "\r\n\r\n";
 
         //begin test case details
-        const testcases = content.elements[0].elements;
-        testcases.forEach(function (item) {
-          if (item.name == "testcase") {
-            var testCaseNameResult = item.attributes.name;
-            testCaseNameResult += getTestCaseResult(item);
-            if (testCaseNameResult.includes("skipped")) {
-              testCaseNameResult = ":pineapple: " + testCaseNameResult;
-            } else if (testCaseNameResult.includes("failure")) {
-              var errorMessage = item.elements[0].attributes.message;
-              var shortMessage = errorMessage.split(/\r?\n/)[0];
-              testCaseNameResult =
-                ":apple: " + testCaseNameResult + " " + shortMessage;
-            } else {
-              testCaseNameResult = ":green_apple: " + testCaseNameResult;
+        testcases.forEach((testSuite) => {
+          reportContent +=
+            `${
+              testSuite.attributes.failures ? ":x: " : ":white_check_mark: "
+            }` +
+            testSuite.attributes.name +
+            "\r\n\r\n";
+          let testDescription = null;
+          testSuite.elements.forEach((test) => {
+            if (testDescription != test.attributes.classname) {
+              testDescription = test.attributes.classname;
+              reportContent += test.attributes.classname + "\r\n";
             }
-            testCaseNameResult = "    " + testCaseNameResult;
-            testCaseNameResult += "\r\n";
-            OUTPUTSTR += testCaseNameResult;
-          }
+            //pass
+            if (!test.elements.length)
+              reportContent +=
+                " :white_check_mark: " + test.attributes.name + "\r\n";
+            //fail
+            else {
+              reportContent +=
+                " :x: " +
+                test.attributes.name +
+                "\r\n\r\n" +
+                "-------------------" +
+                "\r\n\r\n";
+              reportContent += "ERROR: " + "\r\n";
+              const errorMessage = test.elements[0].elements[0].text;
+              reportContent +=
+                errorMessage.split("\n")[0] +
+                "\r\n" +
+                errorMessage.split("\n")[1] +
+                "\r\n" +
+                errorMessage.split("\n")[2] +
+                "\r\n" +
+                errorMessage.split("\n")[3] +
+                "\r\n" +
+                errorMessage.split("\n")[4] +
+                "\r\n" +
+                errorMessage.split("\n")[5];
+              reportContent += "\r\n\r\n" + "-------------------" + "\r\n\r\n";
+            }
+          });
         });
-        testReport += OUTPUTSTR + "\r\n";
+        testReport += reportContent + "\r\n";
       }
     });
     return testReport;
