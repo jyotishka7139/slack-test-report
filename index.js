@@ -90,7 +90,7 @@ try {
           content.elements[0].attributes.name +
           " ALL TESTS PASSED*" +
           "\r\n" +
-          `_${content.elements[0].tests} tests were completed in ${content.elements[0].time}s with ${content.elements[0].tests} passed and ${content.elements[0].failures} failed_`;
+          `_${content.elements[0].attributes.tests} tests were completed in ${content.elements[0].attributes.time}s with ${content.elements[0].attributes.tests} passed and ${content.elements[0].failures} failed_`;
         //144 tests were completed in 21s with 144 passed, 0 failed and 0 skipped.
         "________________________________________________________________________________" +
           "\r\n\r\n\r\n";
