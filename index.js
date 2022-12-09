@@ -58,7 +58,6 @@ try {
   //function for parse every XML:
   function parseData(inData) {
     let testReport = "";
-    const testcases = content.elements[0].elements;
     inData.forEach(function (fileName) {
       // per file actions here, include only TEST files:
       // if (fileName.includes("test")) {
@@ -67,6 +66,7 @@ try {
       var xml = require("fs").readFileSync(testDir + "/" + fileName, "utf8");
       var options = { ignoreComment: true, alwaysChildren: true };
       var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
+      const testcases = content.elements[0].elements;
       //process and output attributes:
       //if (short output stirng for passed test) else (long output string for failed test):
       console.log(util.inspect(content, false, null, true /* enable colors */));
