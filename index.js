@@ -86,13 +86,13 @@ try {
         );
         let reportContent =
           ":white_check_mark: " +
-          "**" +
+          "*" +
           content.elements[0].attributes.name +
-          " ALL TESTS PASSED**" +
+          " ALL TESTS PASSED*" +
           "\r\n\r\n";
-        reportContent += "\r\n" + "**COMPONENTS TEST CASES**" + "\r\n\r\n";
-        reportContent += "**TEST SUITE** | **PASSED** | **TIME**" + "\r\n";
-        reportContent += "-------------- | ---------- | --------" + "\r\n";
+        reportContent += "\r\n" + "*COMPONENTS TEST CASES*" + "\r\n\r\n";
+        reportContent += "*TEST SUITE   |   PASSED   |   TIME*" + "\r\n";
+        // reportContent += "-------------- | ---------- | --------" + "\r\n";
 
         let reachedViewsTestcases = false;
         testcases.forEach((testSuite) => {
@@ -100,9 +100,9 @@ try {
             testSuite.attributes.name.split("/")[2] == "views" &&
             !reachedViewsTestcases
           ) {
-            reportContent += "\r\n" + "**VIEWS TEST CASES**" + "\r\n\r\n";
-            reportContent += "**TEST SUITE** | **PASSED** | **TIME**" + "\r\n";
-            reportContent += "-------------- | ---------- | --------" + "\r\n";
+            reportContent += "\r\n" + "*VIEWS TEST CASES*" + "\r\n\r\n";
+            reportContent += "*TEST SUITE   |   PASSED   |   TIME*" + "\r\n";
+            // reportContent += "-------------- | ---------- | --------" + "\r\n";
             reachedViewsTestcases = true;
           }
           let testSuiteMessage;
@@ -116,19 +116,18 @@ try {
             " and it’s child elements, states and click actions have passed all tests!";
 
           reportContent +=
-            "**" +
+            "*`" +
             testSuite.attributes.name +
-            "**" +
-            "<br>" +
-            testSuiteMessage +
-            " | " +
+            "`*" +
+            "   |   " +
             testSuite.attributes.tests +
-            " :green_circle:" +
-            " | " +
+            " :white_check_mark:" +
+            "   |   " +
             testSuite.attributes.time +
+            "s" +
             "\r\n";
 
-          // reportContent += "> " + "*" + testSuiteMessage + "*" + "\r\n\r\n";
+          reportContent += "> " + "_" + testSuiteMessage + "_" + "\r\n\r\n";
 
           // ------ contained tests of above test suite -------
 
