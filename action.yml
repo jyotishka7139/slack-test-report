@@ -11,14 +11,14 @@ inputs:
     description: "Test Output Path"
     required: true
     default: "missing test XML path from yml configuration"
-  # slackChannelId:
-  #   description: 'Slack Conversation ID ie: C12355667'
-  #   required: true
-  #   default: 'missing slack channel ID from yml configuration'
-  # slackToken:
-  #   description: 'Secret Slack Token'
-  #   required: true
-  #   default: 'missing slack token from yml configuration'
+  slackChannelId:
+    description: "Slack Conversation ID ie: C12355667"
+    required: true
+    default: "missing slack channel ID from yml configuration"
+  slackToken:
+    description: "Secret Slack Token"
+    required: true
+    default: "missing slack token from yml configuration"
 #outputs:
 #none
 runs:
