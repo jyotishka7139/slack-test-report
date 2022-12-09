@@ -88,20 +88,23 @@ try {
           ":white_check_mark: " +
           "**" +
           content.elements[0].attributes.name +
-          " ALL TESTS PASSED**";
-        reportContent += "\r\n\r\n\r\n" + "COMPONENTS TEST CASES" + "\r\n\r\n";
+          " ALL TESTS PASSED**" +
+          "\r\n\r\n";
+        reportContent += "\r\n" + "**COMPONENTS TEST CASES**" + "\r\n\r\n";
+        reportContent += "**TEST SUITE** | **PASSED** | **TIME**" + "\r\n";
+        reportContent += "-------------- | ---------- | --------" + "\r\n";
+
         let reachedViewsTestcases = false;
         testcases.forEach((testSuite) => {
           if (
             testSuite.attributes.name.split("/")[2] == "views" &&
             !reachedViewsTestcases
           ) {
-            reportContent += "\r\n\r\n" + "VIEWS TEST CASES" + "\r\n\r\n";
-
+            reportContent += "\r\n" + "**VIEWS TEST CASES**" + "\r\n\r\n";
+            reportContent += "**TEST SUITE** | **PASSED** | **TIME**" + "\r\n";
+            reportContent += "-------------- | ---------- | --------" + "\r\n";
             reachedViewsTestcases = true;
           }
-          reportContent +=
-            "> " + ":green_circle: " + testSuite.attributes.name + "\r\n\r\n";
           let testSuiteMessage;
           const testSuitePathElements =
             testSuite.attributes.name.split("/").length;
@@ -112,7 +115,20 @@ try {
             testSuiteElement +
             " and it’s child elements, states and click actions have passed all tests!";
 
-          reportContent += "> " + "*" + testSuiteMessage + "*" + "\r\n\r\n";
+          reportContent +=
+            "**" +
+            testSuite.attributes.name +
+            "**" +
+            "<br>" +
+            testSuiteMessage +
+            " | " +
+            testSuite.attributes.tests +
+            " :green_circle:" +
+            " | " +
+            testSuite.attributes.time +
+            "\r\n";
+
+          // reportContent += "> " + "*" + testSuiteMessage + "*" + "\r\n\r\n";
 
           // ------ contained tests of above test suite -------
 
