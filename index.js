@@ -139,18 +139,7 @@ try {
                 "\r\n\r\n";
               reportContent += "ERROR: " + "\r\n";
               const errorMessage = test.elements[0].elements[0].text;
-              reportContent +=
-                errorMessage.split("\n")[0] +
-                "\r\n" +
-                errorMessage.split("\n")[1] +
-                "\r\n" +
-                errorMessage.split("\n")[2] +
-                "\r\n" +
-                errorMessage.split("\n")[3] +
-                "\r\n" +
-                errorMessage.split("\n")[4] +
-                "\r\n" +
-                errorMessage.split("\n")[5];
+              reportContent += errorMessage.split("\n")[0] + "\r\n";
               reportContent += "\r\n\r\n" + "-------------------" + "\r\n\r\n";
             }
           });
