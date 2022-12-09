@@ -85,12 +85,16 @@ try {
           "building ALL PASS report for " + content.elements[0].attributes.name
         );
         let reportContent =
-          ":white_check_mark: " +
+          ":green_alert: " +
           "*" +
           content.elements[0].attributes.name +
           " ALL TESTS PASSED*" +
-          "\r\n\r\n";
-        reportContent += "\r\n" + "*COMPONENTS TEST CASES*" + "\r\n\r\n";
+          "\r\n" +
+          `_${content.elements[0].tests} tests were completed in ${content.elements[0].time}s with ${content.elements[0].tests} passed and ${content.elements[0].failures} failed_`;
+        //144 tests were completed in 21s with 144 passed, 0 failed and 0 skipped.
+        "________________________________________________________________________________" +
+          "\r\n\r\n\r\n";
+        reportContent += "\r\n" + "_*COMPONENTS TEST CASES*_" + "\r\n\r\n";
         reportContent += "*TEST SUITE   |   PASSED   |   TIME*" + "\r\n";
         // reportContent += "-------------- | ---------- | --------" + "\r\n";
 
@@ -100,7 +104,7 @@ try {
             testSuite.attributes.name.split("/")[2] == "views" &&
             !reachedViewsTestcases
           ) {
-            reportContent += "\r\n" + "*VIEWS TEST CASES*" + "\r\n\r\n";
+            reportContent += "\r\n" + "_*VIEWS TEST CASES*_" + "\r\n\r\n";
             reportContent += "*TEST SUITE   |   PASSED   |   TIME*" + "\r\n";
             // reportContent += "-------------- | ---------- | --------" + "\r\n";
             reachedViewsTestcases = true;
@@ -118,16 +122,16 @@ try {
           reportContent +=
             "*`" +
             testSuite.attributes.name +
-            "`*" +
+            "`" +
             "   |   " +
             testSuite.attributes.tests +
             " :white_check_mark:" +
             "   |   " +
             testSuite.attributes.time +
-            "s" +
+            "s*" +
             "\r\n";
 
-          reportContent += "> " + "_" + testSuiteMessage + "_" + "\r\n\r\n";
+          reportContent += "> " + "_*" + testSuiteMessage + "*_" + "\r\n\r\n";
 
           // ------ contained tests of above test suite -------
 
