@@ -200,7 +200,7 @@ try {
             // reportContent += "-------------- | ---------- | --------" + "\r\n";
             reachedViewsTestcases = true;
           }
-          let testSuiteMessage;
+          let testSuiteMessage = "";
           const testSuitePathElements =
             testSuite.attributes.name.split("/").length;
           const testSuiteElement = testSuite.attributes.name
@@ -227,7 +227,7 @@ try {
               : testSuite.attributes.tests) +
             " :white_check_mark:" +
             (testSuite.attributes.failures != 0
-              ? testSuite.attributes.failures + " :x:"
+              ? " " + testSuite.attributes.failures + " :x:"
               : "") +
             "   |   " +
             testSuite.attributes.time +
