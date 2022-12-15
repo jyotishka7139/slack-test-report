@@ -168,52 +168,133 @@ try {
             content.elements[0].attributes.name
         );
         let reportContent =
-          ":x: " +
-          content.elements[0].attributes.name +
-          ": " +
-          content.elements[0].attributes.failures +
-          ` ${
-            content.elements[0].attributes.failures == 1 ? "TEST" : "TESTS"
-          } FAILED`;
-        reportContent += "\r\n\r\n";
+          ":alert: " +
+          "*Student & Parent dashboard unit test cases automation reports*" +
+          " :alert: " +
+          "\r\n" +
+          "Result: SOME TESTS FAILED" +
+          "\r\n" +
+          `_${content.elements[0].attributes.tests} tests were completed in ${content.elements[0].attributes.time}s with ${content.elements[0].attributes.tests} passed and ${content.elements[0].attributes.failures} failed_` +
+          "\r\n" +
+          "________________________________________________________________________________" +
+          "\r\n";
+        reportContent += "\r\n" + "_*COMPONENTS TEST CASES*_" + "\r\n\r\n";
+        reportContent +=
+          "*Test Suite   |   Number of Test Cases   |   Time*" + "\r\n\r\n";
+        // reportContent += "-------------- | ---------- | --------" + "\r\n";
 
-        //begin test case details
+        let reachedViewsTestcases = false;
         testcases.forEach((testSuite) => {
+          if (
+            testSuite.attributes.name.split("/")[2] == "views" &&
+            !reachedViewsTestcases
+          ) {
+            reportContent += "\r\n" + "_*SCREENS TEST CASES*_" + "\r\n\r\n";
+            reportContent +=
+              "*Test Suite   |   Number of Test Cases   |   Time*" + "\r\n\r\n";
+            // reportContent += "-------------- | ---------- | --------" + "\r\n";
+            reachedViewsTestcases = true;
+          }
+          let testSuiteMessage;
+          const testSuitePathElements =
+            testSuite.attributes.name.split("/").length;
+          const testSuiteElement = testSuite.attributes.name
+            .split("/")
+            [testSuitePathElements - 1].split(".")[0];
+
+          if (testSuite.attributes.failures != 0)
+            testSuiteMessage = "*`" + testSuite.attributes.name + "`*" + "\r\n";
+
+          testSuiteMessage +=
+            testSuiteElement +
+            ", it’s child elements, states and interactions have failed some tests";
+
           reportContent +=
-            `${
-              testSuite.attributes.failures != 0
-                ? ":x: "
-                : ":white_check_mark: "
-            }` +
-            testSuite.attributes.name +
-            "\r\n\r\n";
-          let testDescription = null;
-          testSuite.elements.forEach((test) => {
-            if (testDescription != test.attributes.classname) {
-              testDescription = test.attributes.classname;
-              reportContent += test.attributes.classname + "\r\n";
-            }
-            //pass
-            if (!test.elements.length)
-              reportContent +=
-                " :white_check_mark: " + test.attributes.name + "\r\n";
-            //fail
-            else {
-              reportContent +=
-                " :x: " +
-                test.attributes.name +
-                "\r\n\r\n" +
-                "-------------------" +
-                "\r\n\r\n";
-              reportContent += "ERROR: " + "\r\n";
-              const errorMessage = test.elements[0].elements[0].text;
-              reportContent += errorMessage.split("\n")[0] + "\r\n";
-              reportContent += "\r\n\r\n" + "-------------------" + "\r\n\r\n";
-            }
-          });
-          testReport += reportContent + "\r\n\r\n";
+            "> " +
+            "_" +
+            testSuiteMessage +
+            "_" +
+            "   |   " +
+            (testSuite.attributes.failures != 0
+              ? testSuite.attributes.tests - testSuite.attributes.failures
+              : testSuite.attributes.tests) +
+            " :white_check_mark:" +
+            (testSuite.attributes.failures != 0
+              ? testSuite.attributes.failures + " :x:"
+              : "") +
+            "   |   " +
+            testSuite.attributes.time +
+            "s" +
+            "\r\n";
+
+          if (testSuite.attributes.failures != 0) {
+            let testDescription = null;
+            testSuite.elements.forEach((test) => {
+              if (testDescription != test.attributes.classname) {
+                testDescription = test.attributes.classname;
+                reportContent += test.attributes.classname + "\r\n";
+              }
+              //pass
+              if (!test.elements.length)
+                reportContent +=
+                  " :heavy_check_mark: " + test.attributes.name + "\r\n";
+              //fail
+              else {
+                reportContent +=
+                  " :x: " +
+                  test.attributes.name +
+                  "\r\n\r\n" +
+                  "-------------------" +
+                  "\r\n\r\n";
+                reportContent += "ERROR: " + "\r\n";
+                const errorMessage = test.elements[0].elements[0].text;
+                reportContent += errorMessage.split("\n")[0] + "\r\n";
+                reportContent +=
+                  "\r\n\r\n" + "-------------------" + "\r\n\r\n";
+              }
+              reportContent += "\r\n\r\n";
+            });
+          }
+          //fail case display all sub tests
         });
         testReport += reportContent + "\r\n";
+
+        // testcases.forEach((testSuite) => {
+        //   reportContent +=
+        //     `${
+        //       testSuite.attributes.failures != 0
+        //         ? ":x: "
+        //         : ":white_check_mark: "
+        //     }` +
+        //     testSuite.attributes.name +
+        //     "\r\n\r\n";
+        //   let testDescription = null;
+        //   testSuite.elements.forEach((test) => {
+        //     if (testDescription != test.attributes.classname) {
+        //       testDescription = test.attributes.classname;
+        //       reportContent += test.attributes.classname + "\r\n";
+        //     }
+        //     //pass
+        //     if (!test.elements.length)
+        //       reportContent +=
+        //         " :white_check_mark: " + test.attributes.name + "\r\n";
+        //     //fail
+        //     else {
+        //       reportContent +=
+        //         " :x: " +
+        //         test.attributes.name +
+        //         "\r\n\r\n" +
+        //         "-------------------" +
+        //         "\r\n\r\n";
+        //       reportContent += "ERROR: " + "\r\n";
+        //       const errorMessage = test.elements[0].elements[0].text;
+        //       reportContent += errorMessage.split("\n")[0] + "\r\n";
+        //       reportContent += "\r\n\r\n" + "-------------------" + "\r\n\r\n";
+        //     }
+        //   });
+        //   testReport += reportContent + "\r\n\r\n";
+        // });
+        // testReport += reportContent + "\r\n";
       }
     });
     return testReport;
