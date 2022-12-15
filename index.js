@@ -75,7 +75,7 @@ try {
       var content = convert.xml2js(xml, options); // or convert.xml2json(xml, options)
       const testcases = sortComponentsAndViews(content.elements[0].elements);
 
-      console.log(util.inspect(content, false, null, true /* enable colors */));
+      //   console.log(util.inspect(content, false, null, true /* enable colors */));
       console.log("calculating test results, deciding if abbreviate output");
       if (
         parseInt(content.elements[0].attributes.failures) == 0 &&
@@ -208,14 +208,14 @@ try {
             [testSuitePathElements - 1].split(".")[0];
 
           if (testSuite.attributes.failures != 0)
-            testSuiteMessage =
-              "> `*" + testSuite.attributes.name + "*`" + "\r\n";
-
+            testSuiteMessage = "> `" + testSuite.attributes.name + "`" + "\r\n";
+          console.log(testSuiteElement);
           testSuiteMessage +=
+            "> " +
             testSuiteElement +
             (testSuite.attributes.failures != 0
-              ? "> _, it’s child elements, states and interactions have failed some tests_"
-              : "> _, it’s child elements, states and interactions have passed all tests_");
+              ? "_, it’s child elements, states and interactions have failed some tests_"
+              : "_, it’s child elements, states and interactions have passed all tests_");
 
           console.log(testSuiteMessage);
 
@@ -235,6 +235,7 @@ try {
             "\r\n";
 
           if (testSuite.attributes.failures != 0) {
+            reportContent += "\r\n\r\n";
             let testDescription = null;
             testSuite.elements.forEach((test) => {
               if (testDescription != test.attributes.classname) {
