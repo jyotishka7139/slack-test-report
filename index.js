@@ -211,11 +211,11 @@ try {
             testSuiteMessage = "> `" + testSuite.attributes.name + "`" + "\r\n";
           console.log(testSuiteElement);
           testSuiteMessage +=
-            "> " +
+            "> _" +
             testSuiteElement +
             (testSuite.attributes.failures != 0
-              ? "_, it’s child elements, states and interactions have failed some tests_"
-              : "_, it’s child elements, states and interactions have passed all tests_");
+              ? ", it’s child elements, states and interactions have failed some tests_"
+              : ", it’s child elements, states and interactions have passed all tests_");
 
           console.log(testSuiteMessage);
 
@@ -254,9 +254,9 @@ try {
                   "\r\n\r\n" +
                   "-------------------" +
                   "\r\n\r\n";
-                reportContent += "ERROR: " + "\r\n";
+                reportContent += "```ERROR: " + "\r\n";
                 const errorMessage = test.elements[0].elements[0].text;
-                reportContent += errorMessage.split("\n")[0] + "\r\n";
+                reportContent += "```" + errorMessage.split("\n")[0] + "\r\n";
                 reportContent +=
                   "\r\n\r\n" + "-------------------" + "\r\n\r\n";
               }
