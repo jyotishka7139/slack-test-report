@@ -174,7 +174,12 @@ try {
           "\r\n" +
           "Result: SOME TESTS FAILED" +
           "\r\n" +
-          `_${content.elements[0].attributes.tests} tests were completed in ${content.elements[0].attributes.time}s with ${content.elements[0].attributes.tests} passed and ${content.elements[0].attributes.failures} failed_` +
+          `_${content.elements[0].attributes.tests} tests were completed in ${
+            content.elements[0].attributes.time
+          }s with ${
+            content.elements[0].attributes.tests -
+            content.elements[0].attributes.failures
+          } passed and ${content.elements[0].attributes.failures} failed_` +
           "\r\n" +
           "________________________________________________________________________________" +
           "\r\n";
@@ -203,17 +208,19 @@ try {
             [testSuitePathElements - 1].split(".")[0];
 
           if (testSuite.attributes.failures != 0)
-            testSuiteMessage = "*`" + testSuite.attributes.name + "`*" + "\r\n";
+            testSuiteMessage =
+              "> `*" + testSuite.attributes.name + "*`" + "\r\n";
 
           testSuiteMessage +=
             testSuiteElement +
-            ", it’s child elements, states and interactions have failed some tests";
+            (testSuite.attributes.failures != 0
+              ? "> _, it’s child elements, states and interactions have failed some tests_"
+              : "> _, it’s child elements, states and interactions have passed all tests_");
+
+          console.log(testSuiteMessage);
 
           reportContent +=
-            "> " +
-            "_" +
             testSuiteMessage +
-            "_" +
             "   |   " +
             (testSuite.attributes.failures != 0
               ? testSuite.attributes.tests - testSuite.attributes.failures
