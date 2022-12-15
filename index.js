@@ -50,7 +50,7 @@ try {
         slackBot(FINALSTR);
       },
       function (error) {
-        slackBot("Parse failed");
+        slackBot("Parse failed" + error);
       }
     );
   });
@@ -78,11 +78,8 @@ try {
       console.log(util.inspect(content, false, null, true /* enable colors */));
       console.log("calculating test results, deciding if abbreviate output");
       if (
-        0
-        //skipping by default to test
-
-        // parseInt(content.elements[0].attributes.failures) == 0 &&
-        // parseInt(content.elements[0].attributes.errors) == 0
+        parseInt(content.elements[0].attributes.failures) == 0 &&
+        parseInt(content.elements[0].attributes.errors) == 0
       ) {
         console.log(
           "building ALL PASS report for " + content.elements[0].attributes.name
