@@ -254,9 +254,9 @@ try {
                   "\r\n\r\n" +
                   "-------------------" +
                   "\r\n\r\n";
-                reportContent += "```ERROR: " + "\r\n";
+                reportContent += "` ERROR: " + "\r\n";
                 const errorMessage = test.elements[0].elements[0].text;
-                reportContent += "```" + errorMessage.split("\n")[0] + "\r\n";
+                reportContent += errorMessage.split("\n")[0] + "`" + "\r\n";
                 reportContent +=
                   "\r\n\r\n" + "-------------------" + "\r\n\r\n";
               }
