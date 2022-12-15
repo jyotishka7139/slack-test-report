@@ -96,7 +96,8 @@ try {
           "________________________________________________________________________________" +
           "\r\n";
         reportContent += "\r\n" + "_*COMPONENTS TEST CASES*_" + "\r\n\r\n";
-        reportContent += "*TEST SUITE   |   PASSED   |   TIME*" + "\r\n\r\n";
+        reportContent +=
+          "*Test Suite   |   Number of Test Cases   |   Time*" + "\r\n\r\n";
         // reportContent += "-------------- | ---------- | --------" + "\r\n";
 
         let reachedViewsTestcases = false;
@@ -118,10 +119,8 @@ try {
             .split("/")
             [testSuitePathElements - 1].split(".")[0];
           testSuiteMessage =
-            "[" +
             testSuiteElement +
-            "]," +
-            " and it’s child elements, states and click actions have passed all tests!";
+            ", it’s child elements, states and interactions have passed all tests";
 
           //   reportContent +=
           //     "*`" +
