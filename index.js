@@ -85,15 +85,16 @@ try {
           "building ALL PASS report for " + content.elements[0].attributes.name
         );
         let reportContent =
-          ":green_alert: " +
-          "*" +
-          content.elements[0].attributes.name +
-          " ALL TESTS PASSED*" +
+          ":alert_blue: " +
+          "*Student & Parent dashboard unit test cases automation reports*" +
+          ":alert_blue: " +
+          "\r\n" +
+          "Result: ALL TESTS PASSED" +
           "\r\n" +
           `_${content.elements[0].attributes.tests} tests were completed in ${content.elements[0].attributes.time}s with ${content.elements[0].attributes.tests} passed and ${content.elements[0].attributes.failures} failed_` +
           "\r\n" +
           "________________________________________________________________________________" +
-          "\r\n\r\n\r\n";
+          "\r\n";
         reportContent += "\r\n" + "_*COMPONENTS TEST CASES*_" + "\r\n\r\n";
         reportContent += "*TEST SUITE   |   PASSED   |   TIME*" + "\r\n";
         // reportContent += "-------------- | ---------- | --------" + "\r\n";
@@ -104,8 +105,9 @@ try {
             testSuite.attributes.name.split("/")[2] == "views" &&
             !reachedViewsTestcases
           ) {
-            reportContent += "\r\n" + "_*VIEWS TEST CASES*_" + "\r\n\r\n";
-            reportContent += "*TEST SUITE   |   PASSED   |   TIME*" + "\r\n";
+            reportContent += "\r\n" + "_*SCREENS TEST CASES*_" + "\r\n\r\n";
+            reportContent +=
+              "*Test Suite   |   Number of Test Cases   |   Time*" + "\r\n";
             // reportContent += "-------------- | ---------- | --------" + "\r\n";
             reachedViewsTestcases = true;
           }
@@ -116,22 +118,35 @@ try {
             .split("/")
             [testSuitePathElements - 1].split(".")[0];
           testSuiteMessage =
+            "[" +
             testSuiteElement +
+            "]," +
             " and it’s child elements, states and click actions have passed all tests!";
 
+          //   reportContent +=
+          //     "*`" +
+          //     testSuite.attributes.name +
+          //     "`" +
+          //     "   |   " +
+          //     testSuite.attributes.tests +
+          //     " :white_check_mark:" +
+          //     "   |   " +
+          //     testSuite.attributes.time +
+          //     "s*" +
+          //     "\r\n";
+
           reportContent +=
-            "*`" +
-            testSuite.attributes.name +
-            "`" +
+            "> " +
+            "_" +
+            testSuiteMessage +
+            "_" +
             "   |   " +
             testSuite.attributes.tests +
             " :white_check_mark:" +
             "   |   " +
             testSuite.attributes.time +
-            "s*" +
-            "\r\n";
-
-          reportContent += "> " + "_*" + testSuiteMessage + "*_" + "\r\n\r\n";
+            "s" +
+            "\r\n\r\n";
 
           // ------ contained tests of above test suite -------
 
