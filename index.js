@@ -78,11 +78,8 @@ try {
       console.log(util.inspect(content, false, null, true /* enable colors */));
       console.log("calculating test results, deciding if abbreviate output");
       if (
-        0
-        //skipping by default to test
-
-        // parseInt(content.elements[0].attributes.failures) == 0 &&
-        // parseInt(content.elements[0].attributes.errors) == 0
+        parseInt(content.elements[0].attributes.failures) == 0 &&
+        parseInt(content.elements[0].attributes.errors) == 0
       ) {
         console.log(
           "building ALL PASS report for " + content.elements[0].attributes.name
@@ -177,7 +174,11 @@ try {
           "\r\n" +
           "Result: SOME TESTS FAILED" +
           "\r\n" +
-          `_${content.elements[0].attributes.tests} tests were completed in ${content.elements[0].attributes.time}s with ${content.elements[0].attributes.tests} passed and ${content.elements[0].attributes.failures} failed_` +
+          `_${content.elements[0].attributes.tests} tests were completed in 
+          ${content.elements[0].attributes.time}s with 
+          ${testSuite.attributes.tests - testSuite.attributes.failures} 
+          passed and 
+          ${content.elements[0].attributes.failures} failed_` +
           "\r\n" +
           "________________________________________________________________________________" +
           "\r\n";
@@ -206,17 +207,16 @@ try {
             [testSuitePathElements - 1].split(".")[0];
 
           if (testSuite.attributes.failures != 0)
-            testSuiteMessage = "*`" + testSuite.attributes.name + "`*" + "\r\n";
+            testSuiteMessage =
+              "> `*" + testSuite.attributes.name + "*`" + "\r\n";
 
           testSuiteMessage +=
-            testSuiteElement +
-            ", it’s child elements, states and interactions have failed some tests";
+            testSuiteElement + testSuite.attributes.failures != 0
+              ? "> _, it’s child elements, states and interactions have failed some tests_"
+              : "> _, it’s child elements, states and interactions have passed all tests_";
 
           reportContent +=
-            "> " +
-            "_" +
             testSuiteMessage +
-            "_" +
             "   |   " +
             (testSuite.attributes.failures != 0
               ? testSuite.attributes.tests - testSuite.attributes.failures
@@ -228,7 +228,7 @@ try {
             "   |   " +
             testSuite.attributes.time +
             "s" +
-            "\r\n";
+            (testSuite.attributes.failures != 0 ? "\r\n\r\n" : "\r\n");
 
           if (testSuite.attributes.failures != 0) {
             let testDescription = null;
@@ -240,7 +240,7 @@ try {
               //pass
               if (!test.elements.length)
                 reportContent +=
-                  " :heavy_check_mark: " + test.attributes.name + "\r\n";
+                  " :white_check_mark: " + test.attributes.name + "\r\n";
               //fail
               else {
                 reportContent +=
@@ -249,7 +249,7 @@ try {
                   "\r\n\r\n" +
                   "-------------------" +
                   "\r\n\r\n";
-                reportContent += "ERROR: " + "\r\n";
+                reportContent += "```ERROR: " + "\r\n" + "```";
                 const errorMessage = test.elements[0].elements[0].text;
                 reportContent += errorMessage.split("\n")[0] + "\r\n";
                 reportContent +=
