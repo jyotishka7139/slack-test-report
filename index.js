@@ -85,9 +85,9 @@ try {
           "building ALL PASS report for " + content.elements[0].attributes.name
         );
         let reportContent =
-          ":alert_blue: " +
+          ":alert-blue: " +
           "*Student & Parent dashboard unit test cases automation reports*" +
-          ":alert_blue: " +
+          " :alert-blue: " +
           "\r\n" +
           "Result: ALL TESTS PASSED" +
           "\r\n" +
@@ -96,7 +96,7 @@ try {
           "________________________________________________________________________________" +
           "\r\n";
         reportContent += "\r\n" + "_*COMPONENTS TEST CASES*_" + "\r\n\r\n";
-        reportContent += "*TEST SUITE   |   PASSED   |   TIME*" + "\r\n";
+        reportContent += "*TEST SUITE   |   PASSED   |   TIME*" + "\r\n\r\n";
         // reportContent += "-------------- | ---------- | --------" + "\r\n";
 
         let reachedViewsTestcases = false;
@@ -107,7 +107,7 @@ try {
           ) {
             reportContent += "\r\n" + "_*SCREENS TEST CASES*_" + "\r\n\r\n";
             reportContent +=
-              "*Test Suite   |   Number of Test Cases   |   Time*" + "\r\n";
+              "*Test Suite   |   Number of Test Cases   |   Time*" + "\r\n\r\n";
             // reportContent += "-------------- | ---------- | --------" + "\r\n";
             reachedViewsTestcases = true;
           }
@@ -146,7 +146,7 @@ try {
             "   |   " +
             testSuite.attributes.time +
             "s" +
-            "\r\n\r\n";
+            "\r\n";
 
           // ------ contained tests of above test suite -------
 
