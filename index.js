@@ -207,17 +207,12 @@ try {
             .split("/")
             [testSuitePathElements - 1].split(".")[0];
 
-          if (testSuite.attributes.failures != 0)
-            testSuiteMessage = "> `" + testSuite.attributes.name + "`" + "\r\n";
-          console.log(testSuiteElement);
           testSuiteMessage +=
             "> _" +
             testSuiteElement +
             (testSuite.attributes.failures != 0
               ? ", it’s child elements, states and interactions have failed some tests_"
               : ", it’s child elements, states and interactions have passed all tests_");
-
-          console.log(testSuiteMessage);
 
           reportContent +=
             testSuiteMessage +
@@ -235,12 +230,13 @@ try {
             "\r\n";
 
           if (testSuite.attributes.failures != 0) {
-            reportContent += "\r\n\r\n";
+            reportContent +=
+              "\r\n\r\n" + "`" + testSuite.attributes.name + "`" + "\r\n";
             let testDescription = null;
             testSuite.elements.forEach((test) => {
               if (testDescription != test.attributes.classname) {
                 testDescription = test.attributes.classname;
-                reportContent += test.attributes.classname + "\r\n";
+                reportContent += test.attributes.classname + "\r\n\r\n";
               }
               //pass
               if (!test.elements.length)
@@ -254,9 +250,9 @@ try {
                   "\r\n\r\n" +
                   "-------------------" +
                   "\r\n\r\n";
-                reportContent += "` ERROR: " + "\r\n";
+                reportContent += "ERROR: " + "\r\n";
                 const errorMessage = test.elements[0].elements[0].text;
-                reportContent += errorMessage.split("\n")[0] + "`" + "\r\n";
+                reportContent += errorMessage.split("\n")[0] + "\r\n";
                 reportContent +=
                   "\r\n\r\n" + "-------------------" + "\r\n\r\n";
               }
