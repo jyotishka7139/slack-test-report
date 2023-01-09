@@ -7,6 +7,9 @@ inputs:
   who-to-greet: # id of input
     description: "Who to greet"
     required: false
+  moduleName:
+    description: "Name of Module"
+    required: true
   testOutputPath:
     description: "Test Output Path"
     required: true
